@@ -1,4 +1,6 @@
 from lark import Lark
+import ortools
+from ortools.sat.python import cp_model
 
 """
 TODOS:
@@ -8,6 +10,12 @@ TODOS:
 - Run the model
 - Use the output of the model to replace the variables
 """
+
+
+def run_instruction(instruction, model):
+    print(instruction.data)
+    if instruction.data == "introduction":
+        print(instruction)
 
 grammar = """
 start: instruction+
@@ -45,4 +53,8 @@ c(x1 == x2)
 
 parser = Lark(grammar)
 
-print(parser.parse(text).pretty())
+parse_tree = parser.parse(text)
+model = cp_model.CpModel()
+
+for instruction in parse_tree.children:
+    run_instruction(instruction, model)
