@@ -1,1 +1,6 @@
+absl-py==1.0.0
 lark==1.0.0
+ortools==9.1.9490
+protobuf==3.19.1
+pycosat==0.6.3
+six==1.16.0
