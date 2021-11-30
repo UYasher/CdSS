@@ -3,10 +3,10 @@ from lark import Lark
 """
 TODOS:
 - Make the parser support css and introduction/constraint on the same line as css
-- Make expressions inside constraints, not just varialbe == variable
+- Make expressions inside constraints, not just variable == variable
 - Make a function which takes a bunch of instruction and updates the model
 - Run the model
-- Use the output of the model to replace the 
+- Use the output of the model to replace the variables
 """
 
 grammar = """
@@ -22,6 +22,9 @@ css: /.+/
 """
 
 text = """
+$v1
+$v2
+
 #square1 {
     height: 
     v(x1),
