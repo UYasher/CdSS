@@ -11,8 +11,9 @@ TODOS:
 
 grammar = """
 start: instruction+
-instruction: introduction | constraint | css
-introduction: "v(" string ")"
+instruction: introduction  | variable | constraint | css
+introduction: "$" string
+variable: "v(" string ")"
 constraint:  "c(" string "==" string ")"
 string: char+
 char: ("a".."z")|("0".."9")
