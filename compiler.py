@@ -70,5 +70,9 @@ state = {}
 for instruction in parse_tree.children:
     run_instruction(instruction, model, {})
 
-# TODO: Run the model
+solver = cp_model.CpSolver()
+if solver.Solve(model) == cp_model.OPTIMAL:
+    for name in state:
+        print(f'{name}={solver.Value(name)}')
+
 # TODO: Use the output of the model to replace the variables
