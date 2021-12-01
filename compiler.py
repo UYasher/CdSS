@@ -26,6 +26,17 @@ def run_instruction(instruction, model, state):
         #  This will also require updating the parser
 
 
+def solve_model(model, state):
+    solver = cp_model.CpSolver()
+    if solver.Solve(model) == cp_model.OPTIMAL:
+        values = {}
+        for name in state:
+            values[name] = solver.Value(name)
+        return values
+
+    return None
+
+
 # TODO: Make the parser support css and introduction/constraint on the same line as css
 grammar = """
 start: instruction+
@@ -70,9 +81,10 @@ state = {}
 for instruction in parse_tree.children:
     run_instruction(instruction, model, {})
 
-solver = cp_model.CpSolver()
-if solver.Solve(model) == cp_model.OPTIMAL:
-    for name in state:
-        print(f'{name}={solver.Value(name)}')
+values = solve_model(model, state)
 
-# TODO: Use the output of the model to replace the variables
+if values:
+    # TODO: Use the output of the model to replace the variables
+    pass
+else:
+    raise Exception("Unsolvable constraints")
