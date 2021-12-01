@@ -16,7 +16,6 @@ def run_instruction(instruction, model, state):
     if instruction.data == "introduction":
         name = instruction.children[0].children[0]
         state[name] = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, name)
-        model.Add(name)
         return model
 
     if instruction.data == "constraint":
