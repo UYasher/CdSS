@@ -34,13 +34,13 @@ def run_instruction(instruction, model, state):
 
 grammar = """
 start: instruction+
-instruction: introduction  | variable | constraint | css
-introduction: "$" string
-variable: "v(" string ")"
-constraint:  "c(" string "==" string ")"
-string: char+
-char: ("a".."z")|("0".."9")
-css: /.+/
+instruction: code | css
+code:
+    | "$" string -> introduction
+    | "v(" string ")" -> variable
+    | "c(" string "==" string ")" -> constraint
+string: /[a-zA-Z0-9_]+/
+css.-100: /.+/
 %import common.WS
 %ignore WS
 """
