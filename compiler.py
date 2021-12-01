@@ -2,14 +2,6 @@ from lark import Lark
 import ortools
 from ortools.sat.python import cp_model
 
-"""
-TODOS:
-- Make the parser support css and introduction/constraint on the same line as css
-- Make expressions inside constraints, not just variable == variable
-- Run the model
-- Use the output of the model to replace the variables
-"""
-
 DEFAULT_MAX = 999999
 DEFAULT_MIN = -DEFAULT_MAX
 
@@ -30,8 +22,11 @@ def run_instruction(instruction, model, state):
     if instruction.data == "constraint":
         name1 = instruction.children[0].children[1]
         name2 = instruction.children[1].children[0]
+        # TODO: Make expressions inside constraints, not just variable == variable
+        #  This will also require updating the parser
 
 
+# TODO: Make the parser support css and introduction/constraint on the same line as css
 grammar = """
 start: instruction+
 instruction: code | css
@@ -74,3 +69,6 @@ state = {}
 
 for instruction in parse_tree.children:
     run_instruction(instruction, model, {})
+
+# TODO: Run the model
+# TODO: Use the output of the model to replace the variables
