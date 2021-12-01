@@ -79,7 +79,7 @@ model = cp_model.CpModel()
 state = {}
 
 for instruction in parse_tree.children:
-    run_instruction(instruction, model, {})
+    run_instruction(instruction, model, state)
 
 values = solve_model(model, state)
 
