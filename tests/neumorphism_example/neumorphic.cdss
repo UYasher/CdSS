@@ -1,0 +1,10 @@
+c(p <= h)
+c(p <= w)
+c((p-w)*(p-h) == 0)
+c(l * 10 == p)
+c(2l == l * 2)
+
+.box-v(p) {
+  box-shadow: v(l)px&v(l)px&v(2l)px&#bebebe,
+              -v(l)px&-v(l)px&v(2l)px&#ffffff;
+}
