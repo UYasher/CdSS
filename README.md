@@ -58,13 +58,13 @@ variables with the values from the OR-Tools solution and make the tree into css.
 To help ensure the compiler works correctly, you can run `python test.py`. This file
 uses `tests/parser_tests` to check that the parser correctly generates parse trees
 by checking them against hand-generated parse trees. in `tests/parser_tests`, the
-Cdss is provided in a file `<name>.txt` and the hand-generated tree is in the file 
+CdSS is provided in a file `<name>.txt` and the hand-generated tree is in the file 
 `<name>_expected.txt`. Then, the compiler is tested using a simple constraint problem
 with a known solution. Several variants of this problem are provided as `.cdss` files
 in `tests/cdss_examples`.  
 
 You can also see an example of how CdSS can be used to generate more interesting
-abstractions. [Neumorphism]() is a style used in web design to make beautiful and subtle
+abstractions. [Neumorphism](https://uxdesign.cc/neumorphism-in-user-interfaces-b47cef3bf3a6) is a style used in web design to make beautiful and subtle
 websites. It makes heavy use of shadows and lighting, and how objects on the page interact
 with shadows and light will depend on the size of the object. We can make styles for objects
 of different sizes easily by specifying how the shadows should vary with the size of the
