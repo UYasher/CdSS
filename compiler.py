@@ -4,6 +4,7 @@ from ortools.sat.python import cp_model
 import random, string
 from utilities import static_vars
 import argparse
+import time
 
 DEFAULT_MAX = 1000000
 DEFAULT_MIN = -1000000
@@ -140,7 +141,11 @@ def rand_name():
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser(description='Compile cdss files to css files')
     arg_parser.add_argument('input', help='the cdss file to compile')
+    arg_parser.add_argument('--time', help='print out the time to parse and compile', action='store_true')
     args = arg_parser.parse_args()
 
     with open(args.input, 'r') as f:
+        start_time = time.time()
         print(compile_to_css(f.read()))
+        if args.time:
+            print(f"/* {time.time() - start_time} seconds */")
