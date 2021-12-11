@@ -8,13 +8,20 @@ DEFAULT_MAX = 1000000
 DEFAULT_MIN = -1000000
 
 
-reif_names = {}
+def static_vars(**kwargs):
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])
+        return func
+    return decorate
 
+
+@static_vars(existing_names={})
 def rand_name():
     while True:
         s = "__" + "".join(random.choice(string.ascii_lowercase) for i in range(6))
-        if s not in reif_names:
-            reif_names[s] = True
+        if s not in rand_name.existing_names:
+            rand_name.existing_names[s] = True
             return s
 
 
