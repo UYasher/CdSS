@@ -3,13 +3,13 @@ import ortools
 from ortools.sat.python import cp_model
 import random, string
 
-DEFAULT_MAX = 1000
-DEFAULT_MIN = -DEFAULT_MAX
+DEFAULT_MAX = 1000000
+DEFAULT_MIN = -1000000
 
 
 reif_names = {}
 
-def rand_name(): # TODO: replace this with a more sensible naming scheme
+def rand_name():
     while True:
         s = "__" + "".join(random.choice(string.ascii_lowercase) for i in range(6))
         if s not in reif_names:
@@ -19,10 +19,7 @@ def rand_name(): # TODO: replace this with a more sensible naming scheme
 
 def atom_insn(insn, model, state):
     if insn.data == "number":
-        s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"NUM_{rand_name()}")
-        model.Add(s == int(insn.children[0]))
-        print(f"set {str(s)} to {int(insn.children[0])}")
-        return s
+        return model.NewConstant(int(insn.children[0]))
     
     if insn.data == "neg":
         s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"NEG_{rand_name()}")
@@ -31,6 +28,8 @@ def atom_insn(insn, model, state):
 
     if insn.data == "var":
         name = str(insn.children[0].children[0])
+        if name not in state:
+            state[name] = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, name)
         return state[name]
 
     if insn.data == "asum":
@@ -43,8 +42,10 @@ def prod_insn(insn, model, state):
     if insn.data == "mul":
         lhs = prod_insn(insn.children[0], model, state)
         rhs = atom_insn(insn.children[1], model, state)
+        print(type(lhs), type(rhs))
         s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"MUL_{rand_name()}")
-        model.Add(s == (lhs * rhs))
+        model.AddMultiplicationEquality(s, [lhs, rhs])
+#        model.Add((lhs * rhs) == s)
         return s
 
     if insn.data == "div":
@@ -79,9 +80,6 @@ def run_instruction(instruction, model, state):
         for child in instruction.children:
             run_instruction(child, model, state)
 
-    if instruction.data == "introduction":
-        name = str(instruction.children[0].children[0])
-        state[name] = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, name)
 
     if instruction.data == "constraint":
         lhs = sum_insn(instruction.children[0].children[0], model, state)
@@ -109,12 +107,11 @@ def solve_model(state):
     return None
 
 
-# TODO: Make the parser support css and introduction/constraint on the same line as css
+# TODO: Make the parser support css and constraint on the same line as css
 grammar = """
 start: instruction+
 instruction: code | css
 code:
-    | "$" string -> introduction
     | "v(" string ")" -> variable
     | "c(" cmp ")" -> constraint
 
@@ -146,26 +143,35 @@ css.-100: /.+/
 """
 
 text = """
-$x1
-$x2
-
 #square1 {
     height: 
-    v(x1),
+    v(x),
     width: 
-    v(x1)
+    v(x)
 }
 
 #square2{
     height: 
-    v(x2)
+    v(y)
     width: 
-    v(x2),
+    v(y),
+    v(z),
+    v(w)
 }
+c(0 <= x)c(0 <= y)
+c(0 <= z)
+c(x <= 10)
+c(y <= 10)
+c(z <= 10)
 
-c(x1 == x2)
-c(x1+ x1 * 5 <= (--x2))
+c(4*x+2*y+z >= 24)
+c((x-y)*(x-y) <= 4)
+c(w <= x)
+c(w <= y)
+c((w-y)*(w-x) == 0)
+c(w == z*z)
 """
+#c(x1 == x2)
 
 parser = Lark(grammar)
 
@@ -177,7 +183,6 @@ for instruction in parse_tree.children:
     run_instruction(instruction, model, state)
 
 values = solve_model(state)
-values = False
 if values:
     new_text = text
     for key, val in values.items():
