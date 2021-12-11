@@ -1,6 +1,5 @@
 import lark
 from lark import Lark
-import ortools
 from ortools.sat.python import cp_model
 import random, string
 
@@ -43,6 +42,7 @@ def atom_insn(insn, model, state):
     if insn.data == "asum":
         return sum_insn(insn.children[0], model, state)
 
+
 def prod_insn(insn, model, state):
     if insn.data == "punit":
         return atom_insn(insn.children[0], model, state)
@@ -60,7 +60,6 @@ def prod_insn(insn, model, state):
         s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"DIV_{rand_name()}")
         model.Add(s == (lhs // rhs))
         return s
-
 
 
 def sum_insn(insn, model, state):
@@ -81,11 +80,11 @@ def sum_insn(insn, model, state):
         model.Add(s == (lhs - rhs))
         return s
 
+
 def run_instruction(instruction, model, state):
     if instruction.data == "instruction":
         for child in instruction.children:
             run_instruction(child, model, state)
-
 
     if instruction.data == "constraint":
         lhs = sum_insn(instruction.children[0].children[0], model, state)
@@ -96,8 +95,8 @@ def run_instruction(instruction, model, state):
             "leq": lhs <= rhs,
             "geq": lhs >= rhs,
             "neq": lhs != rhs,
-            "lt" : lhs < rhs,
-            "gt" : lhs > rhs
+            "lt": lhs < rhs,
+            "gt": lhs > rhs
         }[instruction.children[0].data])
 
 
@@ -122,7 +121,6 @@ def make_tree(node, values):
     return "".join(make_tree(c, values) for c in node.children)
 
 
-# TODO: Make the parser support css and constraint on the same line as css
 grammar = """
 start: instruction+
 instruction: code | css
