@@ -13,10 +13,10 @@ def parser_test(name):
 
 
 def compiler_test():
-    with open('tests/cdss_examples/hw3.cdss', 'r') as f:
+    with open('tests/cdss_examples/known.cdss', 'r') as f:
         css = compile_to_css(f.read())
         print(css)
-        with open('tests/cdss_examples/hw3-oneline.cdss', 'r') as f2:
+        with open('tests/cdss_examples/known-oneline.cdss', 'r') as f2:
             assert compile_to_css(f2.read()) == css, f"Failed compiler test"
 
 

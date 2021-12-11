@@ -1,7 +1,8 @@
-/* The warm-up exercises from hw2, converted to cdss */
+/* The warm-up exercises from hw2 of CIS189 at the University of Pennsylvania, converted to cdss */
 #square1 {
     height: v(x)px;
     width: v(x)px;
+    z-index: v(r);
 }
 
 #square2 {
@@ -9,6 +10,7 @@
     width: v(y)px;
     min-height: v(z)px;
     min-width: v(w)px;
+    z-index: v(q);
 }
 
 /* Variable Ranges */
@@ -30,3 +32,7 @@ c(w <= x)
 c(w <= y)
 c((w-y)*(w-x) == 0)
 c(w == z*z)
+
+/* Negative */
+c(r == -x)
+c(q == --x)
