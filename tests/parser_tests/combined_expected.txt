@@ -1,0 +1,581 @@
+start
+  instruction
+    css /
+  instruction
+    css *
+  instruction
+    css T
+  instruction
+    css h
+  instruction
+    css e
+  instruction
+    css w
+  instruction
+    css a
+  instruction
+    css r
+  instruction
+    css m
+  instruction
+    css -
+  instruction
+    css u
+  instruction
+    css p
+  instruction
+    css e
+  instruction
+    css x
+  instruction
+    css e
+  instruction
+    css r
+  instruction
+    css c
+  instruction
+    css i
+  instruction
+    css s
+  instruction
+    css e
+  instruction
+    css s
+  instruction
+    css f
+  instruction
+    css r
+  instruction
+    css o
+  instruction
+    css m
+  instruction
+    css h
+  instruction
+    css w
+  instruction
+    css 2
+  instruction
+    css ,
+  instruction
+    css c
+  instruction
+    css o
+  instruction
+    css n
+  instruction
+    css v
+  instruction
+    css e
+  instruction
+    css r
+  instruction
+    css t
+  instruction
+    css e
+  instruction
+    css d
+  instruction
+    css t
+  instruction
+    css o
+  instruction
+    css c
+  instruction
+    css d
+  instruction
+    css s
+  instruction
+    css s
+  instruction
+    css *
+  instruction
+    css /
+  instruction
+    css #
+  instruction
+    css s
+  instruction
+    css q
+  instruction
+    css u
+  instruction
+    css a
+  instruction
+    css r
+  instruction
+    css e
+  instruction
+    css 1
+  instruction
+    css {
+  instruction
+    css h
+  instruction
+    css e
+  instruction
+    css i
+  instruction
+    css g
+  instruction
+    css h
+  instruction
+    css t
+  instruction
+    css :
+  instruction
+    variable
+      string    x
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css w
+  instruction
+    css i
+  instruction
+    css d
+  instruction
+    css t
+  instruction
+    css h
+  instruction
+    css :
+  instruction
+    variable
+      string    x
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css }
+  instruction
+    css #
+  instruction
+    css s
+  instruction
+    css q
+  instruction
+    css u
+  instruction
+    css a
+  instruction
+    css r
+  instruction
+    css e
+  instruction
+    css 2
+  instruction
+    css {
+  instruction
+    css h
+  instruction
+    css e
+  instruction
+    css i
+  instruction
+    css g
+  instruction
+    css h
+  instruction
+    css t
+  instruction
+    css :
+  instruction
+    variable
+      string    y
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css w
+  instruction
+    css i
+  instruction
+    css d
+  instruction
+    css t
+  instruction
+    css h
+  instruction
+    css :
+  instruction
+    variable
+      string    y
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css m
+  instruction
+    css i
+  instruction
+    css n
+  instruction
+    css -
+  instruction
+    css h
+  instruction
+    css e
+  instruction
+    css i
+  instruction
+    css g
+  instruction
+    css h
+  instruction
+    css t
+  instruction
+    css :
+  instruction
+    variable
+      string    z
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css m
+  instruction
+    css i
+  instruction
+    css n
+  instruction
+    css -
+  instruction
+    css w
+  instruction
+    css i
+  instruction
+    css d
+  instruction
+    css t
+  instruction
+    css h
+  instruction
+    css :
+  instruction
+    variable
+      string    w
+  instruction
+    css p
+  instruction
+    css x
+  instruction
+    css ;
+  instruction
+    css }
+  instruction
+    css /
+  instruction
+    css *
+  instruction
+    css V
+  instruction
+    css a
+  instruction
+    css r
+  instruction
+    css i
+  instruction
+    css a
+  instruction
+    css b
+  instruction
+    css l
+  instruction
+    css e
+  instruction
+    css R
+  instruction
+    css a
+  instruction
+    css n
+  instruction
+    css g
+  instruction
+    css e
+  instruction
+    css s
+  instruction
+    css *
+  instruction
+    css /
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            number      0
+        unit
+          punit
+            var
+              string    x
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            number      0
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            number      0
+        unit
+          punit
+            var
+              string    z
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            number      10
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    y
+        unit
+          punit
+            number      10
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    z
+        unit
+          punit
+            number      10
+  instruction
+    css /
+  instruction
+    css *
+  instruction
+    css 4
+  instruction
+    css x
+  instruction
+    css +
+  instruction
+    css 2
+  instruction
+    css y
+  instruction
+    css +
+  instruction
+    css z
+  instruction
+    css >
+  instruction
+    css =
+  instruction
+    css 2
+  instruction
+    css 4
+  instruction
+    css *
+  instruction
+    css /
+  instruction
+    constraint
+      geq
+        add
+          add
+            unit
+              mul
+                punit
+                  number        4
+                var
+                  string        x
+            mul
+              punit
+                number  2
+              var
+                string  y
+          punit
+            var
+              string    z
+        unit
+          punit
+            number      24
+  instruction
+    css /
+  instruction
+    css *
+  instruction
+    css a
+  instruction
+    css b
+  instruction
+    css s
+  instruction
+    css (
+  instruction
+    css x
+  instruction
+    css -
+  instruction
+    css y
+  instruction
+    css )
+  instruction
+    css <
+  instruction
+    css =
+  instruction
+    css 2
+  instruction
+    css *
+  instruction
+    css /
+  instruction
+    constraint
+      leq
+        unit
+          mul
+            punit
+              asum
+                sub
+                  unit
+                    punit
+                      var
+                        string  x
+                  punit
+                    var
+                      string    y
+            asum
+              sub
+                unit
+                  punit
+                    var
+                      string    x
+                punit
+                  var
+                    string      y
+        unit
+          punit
+            number      4
+  instruction
+    css /
+  instruction
+    css *
+  instruction
+    css m
+  instruction
+    css i
+  instruction
+    css n
+  instruction
+    css (
+  instruction
+    css x
+  instruction
+    css ,
+  instruction
+    css y
+  instruction
+    css )
+  instruction
+    css =
+  instruction
+    css z
+  instruction
+    css ^
+  instruction
+    css 2
+  instruction
+    css *
+  instruction
+    css /
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    w
+        unit
+          punit
+            var
+              string    x
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    w
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      eq
+        unit
+          mul
+            punit
+              asum
+                sub
+                  unit
+                    punit
+                      var
+                        string  w
+                  punit
+                    var
+                      string    y
+            asum
+              sub
+                unit
+                  punit
+                    var
+                      string    w
+                punit
+                  var
+                    string      x
+        unit
+          punit
+            number      0
+  instruction
+    constraint
+      eq
+        unit
+          punit
+            var
+              string    w
+        unit
+          mul
+            punit
+              var
+                string  z
+            var
+              string    z

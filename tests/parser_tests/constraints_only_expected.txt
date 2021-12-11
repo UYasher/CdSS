@@ -1,0 +1,126 @@
+start
+  instruction
+    constraint
+      eq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      eq
+        sub
+          add
+            unit
+              mul
+                punit
+                  number        2
+                var
+                  string        x
+            punit
+              var
+                string  x
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      eq
+        unit
+          div
+            punit
+              var
+                string  x
+            number      2
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      geq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      leq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      lt
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      gt
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      neq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            var
+              string    y
+  instruction
+    constraint
+      eq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            neg
+              var
+                string  y
+  instruction
+    constraint
+      eq
+        unit
+          punit
+            var
+              string    x
+        unit
+          punit
+            neg
+              neg
+                var
+                  string        y
