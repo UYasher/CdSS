@@ -121,40 +121,6 @@ def make_tree(node, values):
     return "".join(make_tree(c, values) for c in node.children)
 
 
-grammar = """
-start: instruction+
-instruction: code | css
-code:
-    | "v(" string ")" -> variable
-    | "c(" cmp ")" -> constraint
-
-cmp:  sum "==" sum -> eq
-    | sum "<=" sum -> leq
-    | sum ">=" sum -> geq
-    | sum "!=" sum -> neq
-    | sum "<"  sum -> lt
-    | sum ">" sum -> gt
-
-sum:  product -> unit
-    | sum "+" product -> add
-    | sum "-" product -> sub
-
-product:  atom -> punit
-        | product "*" atom -> mul
-        | product "//" atom -> div
-
-atom:  NUMBER    -> number
-     | "-" atom  -> neg
-     | string    -> var
-     | "(" sum ")" -> asum
-
-string: /[a-zA-Z0-9_]+/
-NUMBER: /[0-9]+/
-css.-100: /.+?/
-%import common.WS
-%ignore WS
-"""
-
 text = """
 #square1 {
     height: v(x),
@@ -182,20 +148,21 @@ c(w == z*z)
 
 
 def compile_to_css(cdss):
-    parser = Lark(grammar)
+    with open('grammar.lark', 'r') as grammar:
+        parser = Lark(grammar.read())
 
-    parse_tree = parser.parse(cdss)
-    model = cp_model.CpModel()
-    state = {}
+        parse_tree = parser.parse(cdss)
+        model = cp_model.CpModel()
+        state = {}
 
-    for instruction in parse_tree.children:
-        run_instruction(instruction, model, state)
+        for instruction in parse_tree.children:
+            run_instruction(instruction, model, state)
 
-    values = solve_model(model, state)
-    if values:
-        return make_tree(parse_tree, values)
-    else:
-        raise Exception("Unsolvable constraints")
+        values = solve_model(model, state)
+        if values:
+            return make_tree(parse_tree, values)
+        else:
+            raise Exception("Unsolvable constraints")
 
 
 print(compile_to_css(text))
