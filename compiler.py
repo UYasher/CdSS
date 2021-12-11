@@ -27,7 +27,7 @@ def rand_name():
 def atom_insn(insn, model, state):
     if insn.data == "number":
         return model.NewConstant(int(insn.children[0]))
-    
+
     if insn.data == "neg":
         s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"NEG_{rand_name()}")
         model.Add(s == -atom_insn(insn.children[0], model, state))
@@ -100,7 +100,7 @@ def run_instruction(instruction, model, state):
         }[instruction.children[0].data])
 
 
-def solve_model(state):
+def solve_model(model, state):
     solver = cp_model.CpSolver()
     if solver.Solve(model) == cp_model.OPTIMAL:
         values = {}
@@ -180,19 +180,22 @@ c((w-y)*(w-x) == 0)
 c(w == z*z)
 """
 
-parser = Lark(grammar)
 
-parse_tree = parser.parse(text)
-model = cp_model.CpModel()
-state = {}
+def compile_to_css(cdss):
+    parser = Lark(grammar)
 
-for instruction in parse_tree.children:
-    run_instruction(instruction, model, state)
+    parse_tree = parser.parse(cdss)
+    model = cp_model.CpModel()
+    state = {}
 
-values = solve_model(state)
-if values:
-    new_model = make_tree(parse_tree, values)
-else:
-    raise Exception("Unsolvable constraints")
+    for instruction in parse_tree.children:
+        run_instruction(instruction, model, state)
 
-print(new_model)
+    values = solve_model(model, state)
+    if values:
+        return make_tree(parse_tree, values)
+    else:
+        raise Exception("Unsolvable constraints")
+
+
+print(compile_to_css(text))
