@@ -3,6 +3,7 @@ from lark import Lark
 from ortools.sat.python import cp_model
 import random, string
 from utilities import static_vars
+import argparse
 
 DEFAULT_MAX = 1000000
 DEFAULT_MIN = -1000000
@@ -132,30 +133,10 @@ def rand_name():
             return s
 
 
-text = """
-#square1 {
-    height: v(x),
-    width: v(x)
-}
+if __name__ == "__main__":
+    arg_parser = argparse.ArgumentParser(description='Compile cdss files to css files')
+    arg_parser.add_argument('input', help='the cdss file to compile')
+    args = arg_parser.parse_args()
 
-#square2 {
-    height: v(y),
-    width: v(y),
-    v(z),
-    v(w)
-} c(0 <= x)c(0 <= y)
-c(0 <= z)
-c(x <= 10)
-c(y <= 10)
-c(z <= 10)
-
-c(4*x+2*y+z >= 24)
-c((x-y)*(x-y) <= 4)
-c(w <= x)
-c(w <= y)
-c((w-y)*(w-x) == 0)
-c(w == z*z)
-"""
-
-
-print(compile_to_css(text))
+    with open(args.input, 'r') as f:
+        print(compile_to_css(f.read()))
