@@ -2,17 +2,10 @@ import lark
 from lark import Lark
 from ortools.sat.python import cp_model
 import random, string
+from utilities import static_vars
 
 DEFAULT_MAX = 1000000
 DEFAULT_MIN = -1000000
-
-
-def static_vars(**kwargs):
-    def decorate(func):
-        for k in kwargs:
-            setattr(func, k, kwargs[k])
-        return func
-    return decorate
 
 
 @static_vars(existing_names={})
