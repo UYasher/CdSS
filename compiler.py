@@ -1,3 +1,4 @@
+import lark
 from lark import Lark
 import ortools
 from ortools.sat.python import cp_model
@@ -42,10 +43,8 @@ def prod_insn(insn, model, state):
     if insn.data == "mul":
         lhs = prod_insn(insn.children[0], model, state)
         rhs = atom_insn(insn.children[1], model, state)
-        print(type(lhs), type(rhs))
         s = model.NewIntVar(DEFAULT_MIN, DEFAULT_MAX, f"MUL_{rand_name()}")
         model.AddMultiplicationEquality(s, [lhs, rhs])
-#        model.Add((lhs * rhs) == s)
         return s
 
     if insn.data == "div":
@@ -100,11 +99,20 @@ def solve_model(state):
     if solver.Solve(model) == cp_model.OPTIMAL:
         values = {}
         for name in state:
-            print(name)
             values[name] = solver.Value(state[name])
         return values
 
     return None
+
+
+def make_tree(node, values):
+    if type(node) == lark.lexer.Token:
+        return str(node)
+    if node.data == "variable":
+        return str(values[str(node.children[0].children[0])])
+    if node.data == "constraint":
+        return ""
+    return "".join(make_tree(c, values) for c in node.children)
 
 
 # TODO: Make the parser support css and constraint on the same line as css
@@ -137,28 +145,23 @@ atom:  NUMBER    -> number
 
 string: /[a-zA-Z0-9_]+/
 NUMBER: /[0-9]+/
-css.-100: /.+/
+css.-100: /.+?/
 %import common.WS
 %ignore WS
 """
 
 text = """
 #square1 {
-    height: 
-    v(x),
-    width: 
-    v(x)
+    height: v(x),
+    width: v(x)
 }
 
-#square2{
-    height: 
-    v(y)
-    width: 
-    v(y),
+#square2 {
+    height: v(y),
+    width: v(y),
     v(z),
     v(w)
-}
-c(0 <= x)c(0 <= y)
+} c(0 <= x)c(0 <= y)
 c(0 <= z)
 c(x <= 10)
 c(y <= 10)
@@ -171,7 +174,6 @@ c(w <= y)
 c((w-y)*(w-x) == 0)
 c(w == z*z)
 """
-#c(x1 == x2)
 
 parser = Lark(grammar)
 
@@ -184,12 +186,8 @@ for instruction in parse_tree.children:
 
 values = solve_model(state)
 if values:
-    new_text = text
-    for key, val in values.items():
-        new_text = new_text.replace(f"v({key})", str(val))
-        new_text = new_text.replace(f"${key}\n", "")
-
-    #TODO: eliminate constraint expressions from output CSS
-    
+    new_model = make_tree(parse_tree, values)
 else:
     raise Exception("Unsolvable constraints")
+
+print(new_model)
