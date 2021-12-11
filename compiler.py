@@ -10,21 +10,25 @@ DEFAULT_MIN = -1000000
 
 
 def compile_to_css(cdss):
+    parse_tree = parse(cdss)
+    model = cp_model.CpModel()
+    state = {}
+
+    for instruction in parse_tree.children:
+        run_instruction(instruction, model, state)
+
+    values = solve_model(model, state)
+    if values:
+        return make_tree(parse_tree, values)
+    else:
+        raise Exception("Unsolvable constraints")
+
+
+def parse(cdss):
     with open('grammar.lark', 'r') as grammar:
         parser = Lark(grammar.read())
 
-        parse_tree = parser.parse(cdss)
-        model = cp_model.CpModel()
-        state = {}
-
-        for instruction in parse_tree.children:
-            run_instruction(instruction, model, state)
-
-        values = solve_model(model, state)
-        if values:
-            return make_tree(parse_tree, values)
-        else:
-            raise Exception("Unsolvable constraints")
+        return parser.parse(cdss)
 
 
 def solve_model(model, state):
